@@ -1,0 +1,71 @@
+```yaml
+version: '3'
+services:
+  nextcloud_db:
+    image: yobasystems/alpine-mariadb:latest
+    mem_limit: 128M
+    container_name: 03_Nextcloud_DB
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    volumes:
+      - /nextcloud/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=abiB4XtdLzNUCmnSnCB8K82YC6ZQ52      #   Please Change the PW. If you change the password, make sure that you do not use any special characters. Depending on the region, this may cause problems.
+      - MYSQL_PASSWORD=9hr29UbBdJiee99We3YcQb3HEypXPK           #   Please Change the PW.
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud_user
+      - MARIADB_AUTO_UPGRADE=1
+
+  nextcloud_redis:
+    image: arm32v7/redis
+    mem_limit: 128M
+    container_name: 03_Nextcloud_Redis
+    hostname: nextcloud-redis
+    environment:
+        - memory=512M
+    networks:
+        - default
+    restart: unless-stopped
+    command: redis-server --requirepass a5Q6kB8Qp8uKaj7RjcTAZByn3JLA65  #   Please Change the PW.
+
+  nextcloud:
+    image: nextcloud
+    mem_limit: 2048M
+    container_name: 03_Nextcloud
+    restart: always
+    ports:
+      - 13280:80
+      - 13443:443
+    links:
+      - nextcloud_db
+      - nextcloud_redis
+    volumes:
+      - /nextcloud/data:/var/www/html
+    environment:
+      - MYSQL_PASSWORD=9hr29UbBdJiee99We3YcQb3HEypXPK           #   Please Change the PW.
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud_user
+      - MYSQL_HOST=nextcloud_db
+      - REDIS_HOST=nextcloud_redis
+      - REDIS_HOST_PASSWORD=a5Q6kB8Qp8uKaj7RjcTAZByn3JLA65      #   Please Change the PW.
+      - OVERWRITEPROTOCOL=https
+      - OVERWRITECLIURL=https://YOUR-DOMAIN.com                 #   Please Change to your Domain.
+      - OVERWRITEHOST=YOUR-DOMAIN.com                           #   Please Change to your Domain.
+      - NEXTCLOUD_INIT_HTACCESS=true
+      - PHP_MEMORY_LIMIT=2G
+      - PHP_UPLOAD_LIMIT=1G
+      
+  cron_job:
+    image: nextcloud
+    mem_limit: 256M
+    container_name: 03_Nextcloud_Cronjob
+    restart: always
+    volumes:
+      - /nextcloud/data:/var/www/html
+    entrypoint: /cron.sh
+    environment:
+      - PHP_MEMORY_LIMIT=512M
+    depends_on:
+      - nextcloud_db
+      - nextcloud_redis
+```
