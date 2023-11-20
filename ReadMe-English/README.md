@@ -63,13 +63,13 @@ In order for Nextcloud to be accessible from outside, you will need your own dom
 
 <br> 3.15. Connect the USB hard disk via USB to one of the blue USB ports.
 
-<br> 3.16. Connect the Pi to your router via LAN. (WLAN sollte nur als Backup verwendet werden.)
+<br> 3.16. Connect the Pi to your router via LAN. (WLAN should only be used as a backup.)
 
 <br> 3.17. Connect the power supply to start the Pi.
 
 <br> 3.18. Go to the web interface of your router and search for the IP address of the Raspberry Pi. Achten Sie darauf, nicht die vom WLAN zu nehmen.
 
-<br> 3.19. Start an SSH session on your Pi. Öffnen Sie dazu auf Ihrem Computer bei Windows CMD oder bei macOS das Terminal. Geben Sie folgenden Befehl unten ein. Ersetzen Sie IP-ADRESSE durch die vorher herausgefundene IP-Adresse.
+<br> 3.19. Start an SSH session on your Pi. To do this, open CMD on your computer for Windows or the terminal for macOS. Enter the following command below. Replace IP-ADRESS with the IP address you found out previously.
 ```sh
 ssh pi@IP-ADRESSE
 ```
