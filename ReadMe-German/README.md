@@ -398,8 +398,6 @@ services:
     mem_limit: 128M
     container_name: 03_Nextcloud_Redis
     hostname: nextcloud-redis
-    environment:
-        - memory=512M
     networks:
         - default
     restart: unless-stopped
