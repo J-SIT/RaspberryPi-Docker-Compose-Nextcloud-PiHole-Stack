@@ -1,0 +1,12 @@
+```yaml
+version: '2'
+services:
+  autoheal:
+    restart: always
+    container_name: 07_AutoHEAL
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+```

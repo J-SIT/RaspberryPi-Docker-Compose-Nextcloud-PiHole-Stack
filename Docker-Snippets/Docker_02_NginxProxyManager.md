@@ -15,4 +15,10 @@ services:
     volumes:
       - /docker/02_NginxProxyManager/data:/data
       - /docker/02_NginxProxyManager/letsencrypt:/etc/letsencrypt
+    healthcheck:
+      test: curl --fail http://10.1.0.57:81 || exit 1        #   Please Enter your local IP.
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
 ```

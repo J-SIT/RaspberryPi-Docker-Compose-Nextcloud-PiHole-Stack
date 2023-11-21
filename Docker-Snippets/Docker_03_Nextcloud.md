@@ -53,6 +53,12 @@ services:
       - NEXTCLOUD_INIT_HTACCESS=true
       - PHP_MEMORY_LIMIT=2G
       - PHP_UPLOAD_LIMIT=1G
+    healthcheck:
+      test: curl --fail http://10.1.0.57:13280 || exit 1        #   Please Enter your local IP.
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
       
   cron_job:
     image: nextcloud
