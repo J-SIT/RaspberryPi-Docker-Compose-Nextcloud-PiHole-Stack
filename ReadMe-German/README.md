@@ -411,6 +411,7 @@ services:
     ports:
       - 13280:80
       - 13443:443
+      - 9980:9980
     links:
       - nextcloud_db
       - nextcloud_redis
