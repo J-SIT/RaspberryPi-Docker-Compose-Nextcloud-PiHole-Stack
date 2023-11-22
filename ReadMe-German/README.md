@@ -3,12 +3,6 @@ ich habe mich dazu entschieden, statt die PDF-Datei zu übersetzen, einfach dire
 <br>
 Ok, also als Erstes einmal, was habe ich für dieses Projekt alles verwendet:
 
-```yaml:[Docker-Snippets/Docker_06_WatchTower.yaml]
-
-
-```
-
-
 
 <br>
 <br>
