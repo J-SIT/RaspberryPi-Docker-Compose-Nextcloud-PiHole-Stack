@@ -2,6 +2,14 @@ Hallo nochmal,
 ich habe mich dazu entschieden, statt die PDF-Datei zu übersetzen, einfach direkt die Zusammenfassung hier noch mal reinzuschreiben.
 <br>
 Ok, also als Erstes einmal, was habe ich für dieses Projekt alles verwendet:
+
+```yaml:[Docker-Snippets/Docker_06_WatchTower.yaml]
+
+
+```
+
+
+
 <br>
 <br>
 <h1> 01_Verwendete Materialien </h1>
