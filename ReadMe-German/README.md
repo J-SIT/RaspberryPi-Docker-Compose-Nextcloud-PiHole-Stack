@@ -375,6 +375,7 @@ services:
 03_nextcloud
 ```
 <br> 6.2.	Kopieren Sie folgendes Script in den Web editor. Passen Sie das Markierte mit der Domain aus Schritt 4.4 und die Passwörter an und klicken Sie anschließend auf Deploy the stack.
+
 ```yaml
 version: '3'
 services:
@@ -387,8 +388,8 @@ services:
     volumes:
       - /nextcloud/db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=abiB4XtdLzNUCmnSnCB8K82YC6ZQ52               # Change me (for compatibility reasons, please do not use special characters.)
-      - MYSQL_PASSWORD=9hr29UbBdJiee99We3YcQb3HEypXPK                    # Change me (for compatibility reasons, please do not use special characters.)
+      - MYSQL_ROOT_PASSWORD=abiB4XtdLzNUCmnSnCB8K82YC6ZQ52      #   Please Change the PW. If you change the password, make sure that you do not use any special characters. Depending on the region, this may cause problems.
+      - MYSQL_PASSWORD=9hr29UbBdJiee99We3YcQb3HEypXPK           #   Please Change the PW.
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud_user
       - MARIADB_AUTO_UPGRADE=1
@@ -401,7 +402,7 @@ services:
     networks:
         - default
     restart: unless-stopped
-    command: redis-server --requirepass a5Q6kB8Qp8uKaj7RjcTAZByn3JLA65   # Change me (for compatibility reasons, please do not use special characters.)
+    command: redis-server --requirepass a5Q6kB8Qp8uKaj7RjcTAZByn3JLA65  #   Please Change the PW.
 
   nextcloud:
     image: nextcloud
@@ -418,18 +419,24 @@ services:
     volumes:
       - /nextcloud/data:/var/www/html
     environment:
-      - MYSQL_PASSWORD=9hr29UbBdJiee99We3YcQb3HEypXPK                    # Change me (for compatibility reasons, please do not use special characters.)
+      - MYSQL_PASSWORD=9hr29UbBdJiee99We3YcQb3HEypXPK           #   Please Change the PW.
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud_user
       - MYSQL_HOST=nextcloud_db
       - REDIS_HOST=nextcloud_redis
-      - REDIS_HOST_PASSWORD=a5Q6kB8Qp8uKaj7RjcTAZByn3JLA65               # Change me (for compatibility reasons, please do not use special characters.)
+      - REDIS_HOST_PASSWORD=a5Q6kB8Qp8uKaj7RjcTAZByn3JLA65      #   Please Change the PW.
       - OVERWRITEPROTOCOL=https
-      - OVERWRITECLIURL=https://example.com                              # Change to your Domain
-      - OVERWRITEHOST=example.com                                        # Change to your Domain
+      - OVERWRITECLIURL=https://YOUR-DOMAIN.com                 #   Please Change to your Domain.
+      - OVERWRITEHOST=YOUR-DOMAIN.com                           #   Please Change to your Domain.
       - NEXTCLOUD_INIT_HTACCESS=true
       - PHP_MEMORY_LIMIT=2G
       - PHP_UPLOAD_LIMIT=1G
+    healthcheck:
+      test: curl --fail http://10.1.0.57:13280 || exit 1        #   Please Enter your local IP.
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
       
   cron_job:
     image: nextcloud
@@ -445,6 +452,7 @@ services:
       - nextcloud_db
       - nextcloud_redis
 ```
+
  <br> <br>
  <h1> 07_Installieren vom DDNS-Broker </h1>
 
@@ -515,6 +523,11 @@ services:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_SCHEDULE: 0 0 1 * *
+      TZ: Europe/Berlin
     restart: always
 ```
  <br> <br>
@@ -684,3 +697,19 @@ rm nextcloud-init-sync.lock
 
 
 
+Optional aber Empfohlen:
+Startet ungesunde Container wieder.
+
+Stackname: 04_autoheal
+```yaml
+version: '2'
+services:
+  autoheal:
+    restart: always
+    container_name: 07_AutoHEAL
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+```

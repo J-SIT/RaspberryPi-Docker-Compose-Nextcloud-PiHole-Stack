@@ -1,4 +1,3 @@
-```yaml
 version: "3.9"
 services:
   ddns-ipv64:
@@ -12,4 +11,3 @@ services:
       - "CRON_TIME_DIG=*/30 * * * *"
       - "DOMAIN_IPV64=YOUR-DOMAIN.com"      #   Please Change to your Domain.
       - "DOMAIN_KEY=YOUR-PIN-CODE"          #   Please Change to your Domain-Key.
-```

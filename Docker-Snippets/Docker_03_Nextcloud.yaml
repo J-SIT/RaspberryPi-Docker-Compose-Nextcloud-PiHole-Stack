@@ -1,4 +1,3 @@
-```yaml
 version: '3'
 services:
   nextcloud_db:
@@ -55,7 +54,7 @@ services:
       - PHP_UPLOAD_LIMIT=1G
     healthcheck:
       test: curl --fail http://10.1.0.57:13280 || exit 1        #   Please Enter your local IP.
-      interval: 30s
+      interval: 60s
       retries: 5
       start_period: 20s
       timeout: 10s
@@ -73,4 +72,3 @@ services:
     depends_on:
       - nextcloud_db
       - nextcloud_redis
-```

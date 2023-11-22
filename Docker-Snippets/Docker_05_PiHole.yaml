@@ -1,4 +1,3 @@
-```yaml
 version: "3"
 services:
   pihole:
@@ -19,4 +18,3 @@ services:
       - '/docker/05_PiHole/etc-pihole:/etc/pihole'
       - '/docker/05_PiHole/etc-dnsmasq.d:/etc/dnsmasq.d'
     restart: unless-stopped
-```

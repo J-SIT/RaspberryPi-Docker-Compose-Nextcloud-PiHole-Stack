@@ -517,6 +517,11 @@ services:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_SCHEDULE: 0 0 1 * *
+      TZ: Europe/Berlin
     restart: always
 ```
  <br> <br>
@@ -683,3 +688,20 @@ rm nextcloud-init-sync.lock
 ```
 <br> 13.18.	Then click on Rescan.
 <br> ![image](https://github.com/J-SIT/RaspberryPi-Docker-Compose-Nextcloud-PiHole-Stack/assets/52483642/30637add-4cfc-4c02-bdbe-dff0829a75b8)
+
+Optional but recommended:
+Restarts unhealthy containers.
+
+Stackname: 04_autoheal
+```yaml
+version: '2'
+services:
+  autoheal:
+    restart: always
+    container_name: 07_AutoHEAL
+    image: willfarrell/autoheal
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=all
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+```
