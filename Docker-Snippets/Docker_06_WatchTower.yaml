@@ -1,4 +1,3 @@
-```yaml
 version: "3"
 services:
   watchtower:
@@ -13,4 +12,3 @@ services:
       WATCHTOWER_SCHEDULE: 0 0 1 * *
       TZ: Europe/Berlin
     restart: always
-```
